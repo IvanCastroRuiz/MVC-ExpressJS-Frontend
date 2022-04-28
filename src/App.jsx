@@ -1,26 +1,28 @@
-import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// Layout
+import Layout from './Layaut/Layout';
+//componentes
+import Main from './components/Main';
+import ConsultaID from './components/consultaID';
+import Actualizar from './components/Actualizar';
+import Eliminar from './components/Eliminar';
 
 function App() {
-  const [ consulta, setConsulta ] = useState({});
-  useEffect(() =>{
-    const consultarApi = async () => {
-        try {
-            const respuesta = await fetch('http://localhost:4000/read');
-            const resultado = await respuesta.json();
-            setConsulta(resultado);
-            console.log(consulta);                
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    consultarApi();
-  },[]);
-
-
+  
   return (
-    <div>
-      Sistema Pedidos
-    </div>
+    <>
+      <Router>
+        <Routes>
+            {/* Rutas Publicas */}
+            <Route exact path="/" element={<Layout />}>
+                <Route path="/" element={<Main />} />
+                <Route path="consulta-individual" element={<ConsultaID/>} />
+                <Route path="actualizar" element={<Actualizar/>} />
+                <Route path="eliminar" element={<Eliminar/>} />
+            </Route>
+        </Routes>  
+      </Router>              
+    </>
   );
 }
 
